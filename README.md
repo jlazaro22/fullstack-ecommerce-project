@@ -1,4 +1,4 @@
-Project Series:
+# Project Series
 This series provides a complete, production-ready ecommerce solution that you can customize for your own projects.
 
 Part One: REST API backend with NodeJS, TypeScript, Express, Drizzle ORM, and Postgres.
