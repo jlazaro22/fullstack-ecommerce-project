@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
-import db from '../../db';
-import { productsTable } from '../../db/productsSchema';
+import db from 'src/db';
+import { productsTable } from 'src/db/productsSchema';
 
 export async function listProducts(req: Request, res: Response) {
   try {
@@ -24,7 +24,7 @@ export async function getProductById(req: Request, res: Response) {
       .where(eq(productsTable.id, id));
 
     if (!product) {
-      return res.status(404).json({ message: `Product not found. Id: ${id}` });
+      res.status(404).json({ message: `Product not found. Id: ${id}` });
     }
 
     res.status(200).json(product);
@@ -38,7 +38,7 @@ export async function createProduct(req: Request, res: Response) {
   try {
     const [product] = await db
       .insert(productsTable)
-      .values(req.body)
+      .values(req.cleanBody)
       .returning();
 
     res.status(201).json(product);
@@ -50,7 +50,7 @@ export async function createProduct(req: Request, res: Response) {
 
 export async function updateProduct(req: Request, res: Response) {
   const id = Number(req.params.id);
-  const fieldsValues = req.body;
+  const fieldsValues = req.cleanBody;
 
   const [product] = await db
     .update(productsTable)
@@ -59,7 +59,7 @@ export async function updateProduct(req: Request, res: Response) {
     .returning();
 
   if (!product) {
-    return res.status(404).json({ message: `No product found with id: ${id}` });
+    res.status(404).json({ message: `No product found with id: ${id}` });
   }
 
   res.status(202).json(product);
@@ -75,9 +75,7 @@ export async function deleteProduct(req: Request, res: Response) {
       .returning();
 
     if (!deletedProduct) {
-      return res
-        .status(404)
-        .json({ message: `No product found with id: ${id}` });
+      res.status(404).json({ message: `No product found with id: ${id}` });
     }
 
     res
