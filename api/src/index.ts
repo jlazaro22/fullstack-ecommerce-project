@@ -1,4 +1,5 @@
 import express, { json, Request, Response, urlencoded } from 'express';
+import authRoutes from './routes/auth';
 import productsRoutes from './routes/products';
 
 const port = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ app.get('/healthcheck', (req: Request, res: Response) => {
   res.send('API responding!');
 });
 
+app.use('/auth', authRoutes);
 app.use('/products', productsRoutes);
 
 app.listen(port, () => {

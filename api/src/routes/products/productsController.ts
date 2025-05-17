@@ -25,6 +25,7 @@ export async function getProductById(req: Request, res: Response) {
 
     if (!product) {
       res.status(404).json({ message: `Product not found. Id: ${id}` });
+      return;
     }
 
     res.status(200).json(product);
@@ -60,6 +61,7 @@ export async function updateProduct(req: Request, res: Response) {
 
   if (!product) {
     res.status(404).json({ message: `No product found with id: ${id}` });
+    return;
   }
 
   res.status(202).json(product);
@@ -76,6 +78,7 @@ export async function deleteProduct(req: Request, res: Response) {
 
     if (!deletedProduct) {
       res.status(404).json({ message: `No product found with id: ${id}` });
+      return;
     }
 
     res
