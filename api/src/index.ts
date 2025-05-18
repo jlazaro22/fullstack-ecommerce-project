@@ -1,5 +1,6 @@
 import express, { json, Request, Response, urlencoded } from 'express';
 import authRoutes from './routes/auth/index.js';
+import ordersRoutes from './routes/orders/index.js';
 import productsRoutes from './routes/products/index.js';
 
 const port = process.env.PORT || 3000;
@@ -14,7 +15,9 @@ app.get('/healthcheck', (req: Request, res: Response) => {
 
 app.use('/auth', authRoutes);
 app.use('/products', productsRoutes);
+app.use('/orders', ordersRoutes);
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+process.env.NODE_ENV !== 'production' &&
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+  });
