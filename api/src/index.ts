@@ -1,6 +1,6 @@
 import express, { json, Request, Response, urlencoded } from 'express';
-import authRoutes from './routes/auth';
-import productsRoutes from './routes/products';
+import authRoutes from './routes/auth/index.js';
+import productsRoutes from './routes/products/index.js';
 
 const port = process.env.PORT || 3000;
 const app = express();

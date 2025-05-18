@@ -2,11 +2,15 @@ import bcrypt from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 import { Request, Response, Router } from 'express';
 import jwt from 'jsonwebtoken';
-import db from 'src/db';
-import { createUserSchema, loginSchema, usersTable } from 'src/db/usersSchema';
-import { validateData } from 'src/middlewares/validationMiddleware';
+import db from 'src/db/index.js';
+import {
+  createUserSchema,
+  loginSchema,
+  usersTable,
+} from 'src/db/usersSchema.js';
+import { validateData } from 'src/middlewares/validationMiddleware.js';
 
-const router = Router();
+const router: Router = Router();
 
 router.post(
   '/register',

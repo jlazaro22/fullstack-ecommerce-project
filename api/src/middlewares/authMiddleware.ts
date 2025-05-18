@@ -30,7 +30,7 @@ export function verifySeller(req: Request, res: Response, next: NextFunction) {
   const role = req.role;
 
   if (role !== 'seller') {
-    res.status(401).json({ message: 'Unauthorized' });
+    res.status(401).json({ message: 'Access denied' });
     return;
   }
 

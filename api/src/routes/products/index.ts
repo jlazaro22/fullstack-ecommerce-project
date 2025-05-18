@@ -2,18 +2,18 @@ import { Router } from 'express';
 import {
   createProductSchema,
   updateProductSchema,
-} from 'src/db/productsSchema';
-import { verifySeller, verifyToken } from 'src/middlewares/authMiddleware';
-import { validateData } from 'src/middlewares/validationMiddleware';
+} from 'src/db/productsSchema.js';
+import { verifySeller, verifyToken } from 'src/middlewares/authMiddleware.js';
+import { validateData } from 'src/middlewares/validationMiddleware.js';
 import {
   createProduct,
   deleteProduct,
   getProductById,
   listProducts,
   updateProduct,
-} from './productsController';
+} from './productsController.js';
 
-const router = Router();
+const router: Router = Router();
 
 router.get('/', listProducts);
 router.get('/:id', getProductById);
