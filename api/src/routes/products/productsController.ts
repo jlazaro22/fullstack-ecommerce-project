@@ -50,27 +50,32 @@ export async function createProduct(req: Request, res: Response) {
 }
 
 export async function updateProduct(req: Request, res: Response) {
-  const id = Number(req.params.id);
-  const fieldsValues = req.cleanBody;
+  try {
+    const id = Number(req.params.id);
+    const fieldsValues = req.cleanBody;
 
-  const [product] = await db
-    .update(productsTable)
-    .set(fieldsValues)
-    .where(eq(productsTable.id, id))
-    .returning();
+    const [product] = await db
+      .update(productsTable)
+      .set(fieldsValues)
+      .where(eq(productsTable.id, id))
+      .returning();
 
-  if (!product) {
-    res.status(404).json({ message: `No product found with id: ${id}` });
-    return;
+    if (!product) {
+      res.status(404).json({ message: `No product found with id: ${id}` });
+      return;
+    }
+
+    res.status(202).json(product);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Failed to update product' });
   }
-
-  res.status(202).json(product);
 }
 
 export async function deleteProduct(req: Request, res: Response) {
-  const id = Number(req.params.id);
-
   try {
+    const id = Number(req.params.id);
+
     const [deletedProduct] = await db
       .delete(productsTable)
       .where(eq(productsTable.id, id))
